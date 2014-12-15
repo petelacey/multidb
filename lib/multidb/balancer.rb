@@ -41,6 +41,7 @@ module Multidb
         (@configuration.raw_configuration[:databases] || {}).each_pair do |name, config|
           configs = config.is_a?(Array) ? config : [config]
           configs.each do |config|
+            config = config || {}
             if config["alias"]
               @candidates[name] = @candidates[config["alias"]]
               next
