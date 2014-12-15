@@ -41,6 +41,10 @@ module Multidb
         (@configuration.raw_configuration[:databases] || {}).each_pair do |name, config|
           configs = config.is_a?(Array) ? config : [config]
           configs.each do |config|
+            if config["alias"]
+              @candidates[name] = @candidates[config["alias"]]
+              next
+            end
             candidate = Candidate.new(@configuration.default_adapter.merge(config))
             @candidates[name] ||= []
             @candidates[name].push(candidate)
